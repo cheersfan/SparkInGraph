@@ -7,6 +7,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Map.Entry;
 
 /**
  * @author fxf
@@ -131,5 +132,21 @@ public class Graph implements Serializable {
 	 */
 	public ArrayList<String> getEdges(String n) {
 		return edges.get(n);
+	}
+
+	/**
+	 * 以二维数组的形式返回整个图的数据
+	 * 
+	 * @return
+	 */
+	public ArrayList<ArrayList<String>> getAdjGraph() {
+		ArrayList<ArrayList<String>> adjGraph = new ArrayList<>();
+		for (Entry<String, ArrayList<String>> entry : edges.entrySet()) {
+			ArrayList<String> list = new ArrayList<>();
+			list.add(entry.getKey());
+			list.addAll(entry.getValue());
+			adjGraph.add(list);
+		}
+		return adjGraph;
 	}
 }

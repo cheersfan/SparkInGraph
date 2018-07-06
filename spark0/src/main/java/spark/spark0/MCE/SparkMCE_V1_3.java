@@ -32,7 +32,7 @@ import spark.spark0.Graph;
  *         本地eclipse计算
  *
  */
-public class SparkMCE3 {
+public class SparkMCE_V1_3 {
 
 	/**
 	 * @param args
@@ -124,7 +124,7 @@ public class SparkMCE3 {
 
 						// SparkTTT2 tttAlgth = new SparkTTT2(graph_bc.value(), nodes);
 						// // 创建SparkTTT2类的对象
-						SparkTTT3 tttAlgth = new SparkTTT3(graph_bc.value(), nodes);
+						SparkTTT_V1_3 tttAlgth = new SparkTTT_V1_3(graph_bc.value(), nodes);
 						// 创建SparkTTT3类的对象
 						ArrayList<ArrayList<String>> cs = tttAlgth.TTTMCE();// 调用函数，nodes中的极大团
 						return cs.iterator();

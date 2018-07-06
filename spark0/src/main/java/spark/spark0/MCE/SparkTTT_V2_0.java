@@ -1,4 +1,4 @@
-package local.MCE;
+package spark.spark0.MCE;
 
 import java.util.ArrayList;
 
@@ -10,41 +10,45 @@ import spark.spark0.Graph;
  * @author fxf
  *
  */
-public class TTT {
+public class SparkTTT_V2_0 {
 	ArrayList<ArrayList<String>> cliques = new ArrayList<>();// 最终求得的全部极大团数据
 	Graph graph;// 图数据
 
 	/**
-	 * @param args
+	 * @param list
+	 * @param graph_bc_value
+	 * @return
 	 */
-	public void TTTMethod(String path) {
+	public ArrayList<ArrayList<String>> TTTMethod(ArrayList<String> list, Graph graph_bc_value) {
 		// TODO Auto-generated method stub
-		graph = new Graph(path);// 从路径中读取图数据
+		graph = new Graph(graph_bc_value);// 初始化grah对象
 
-		graph.printGraph();
+		ArrayList<String> SUBG = new ArrayList<>();
+		ArrayList<String> CAND = new ArrayList<>();
+		ArrayList<String> Q = new ArrayList<>();
 
-		for (String node : graph.getNodes()) {// 遍历graph全部的点，以及此点的边
-			// TTT算法的三个集合
-			ArrayList<String> SUBG = new ArrayList<>();
-			ArrayList<String> CAND = new ArrayList<>();
-			ArrayList<String> Q = new ArrayList<>();
-
-			CAND.add(node);
-			// 避免重复计算：eg. 1 2 9, 2 1 9, 9 1 2
-			for (String edge : graph.getEdges(node)) {
-				if (!(Integer.parseInt(edge) < Integer.parseInt(node))) {
-					CAND.add(edge);
-				}
+		String startNode = list.get(0);
+		for (String node : list) {
+			if (Integer.parseInt(node) >= Integer.parseInt(startNode)) {
+				CAND.add(node);
 			}
-			SUBG.add(node);
-			SUBG.addAll(graph.getEdges(node));
-
-			// 递归调用TTTAlgorithm方法
-			TTTAlgorithm(SUBG, CAND, Q);
 		}
+		SUBG.addAll(list);
+
+		// 递归调用TTTAlgorithm方法
+		TTTAlgorithm(SUBG, CAND, Q);
+
+		return cliques;
 	}
 
+	/**
+	 * @param SUBG
+	 * @param CAND
+	 * @param Q
+	 * @return
+	 */
 	public void TTTAlgorithm(ArrayList<String> SUBG, ArrayList<String> CAND, ArrayList<String> Q) {
+		// TODO Auto-generated method stub
 		// System.out.println("SUBG: " + SUBG.toString() + " CAND: " + CAND.toString() +
 		// " Q: " + Q.toString());
 		if (SUBG.isEmpty()) {// 求出极大团的条件
@@ -108,4 +112,5 @@ public class TTT {
 
 		return minNode;
 	}
+
 }

@@ -9,12 +9,12 @@ import spark.spark0.Graph;
  * 
  *         极大团挖掘的TTT算法，由SparkMCEx调用，计算极大团 使用graph类存储图数据
  */
-public class SparkTTT3 {
+public class SparkTTT_V1_3 {
 	public Graph graph; // 图的全部信息
 	public ArrayList<String> nodes; // 所求极大团的节点的集合
 	public ArrayList<ArrayList<String>> cliques;// 求得的全部团
 
-	public SparkTTT3(Graph g, ArrayList<String> n) {
+	public SparkTTT_V1_3(Graph g, ArrayList<String> n) {
 		// TODO Auto-generated constructor stub
 		cliques = new ArrayList<>();
 		graph = new Graph(g);
