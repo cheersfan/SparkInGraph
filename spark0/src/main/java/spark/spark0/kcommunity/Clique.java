@@ -27,14 +27,44 @@ public class Clique implements Serializable {
 		this.cliqueInfo = new ArrayList<>(clique);
 	}
 
+	public Clique(Clique c) {
+		this.cliqueID = c.cliqueID;
+		this.cliqueInfo = new ArrayList<>(c.cliqueInfo);
+		this.parentID = c.parentID;
+	}
+
 	public Clique(int id, int pid, ArrayList<String> clique) {
 		this.cliqueID = id;
 		this.parentID = pid;
 		this.cliqueInfo = new ArrayList<>(clique);
 	}
 
+	/**
+	 * 重写equals方法
+	 * 
+	 * @param pID
+	 */
+	public boolean equals(Object obj) {
+		if (obj instanceof Clique) {
+			Clique cObj = (Clique) obj;
+			return this.cliqueID == cObj.cliqueID && this.parentID == cObj.parentID
+					&& this.cliqueInfo.equals(cObj.cliqueInfo);
+		}
+		return super.equals(obj);// ???
+
+	}
+
+	/**
+	 * parentID的Set方法
+	 * 
+	 * @param pID
+	 */
 	public void setParentID(int pID) {
 		this.parentID = pID;
+	}
+
+	public void printClique() {
+		System.out.print("cid:" + cliqueID);
 	}
 
 }

@@ -1,15 +1,22 @@
 package spark.spark0.kcommunity;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map.Entry;
 
 /**
+ * 
+ * Clique的工具类 读取clique文件、写求得的社区数据文件等
+ * 
  * @author fxf
  *
  */
@@ -18,6 +25,12 @@ public class CliqueUtil implements Serializable {
 
 	}
 
+	/**
+	 * 从文件路径中读取图数据
+	 * 
+	 * @param path
+	 * @return 图数据的数组
+	 */
 	public ArrayList<Clique> getCliquesFromPath(String path) {
 		ArrayList<Clique> cliques = new ArrayList<>();
 		File file = new File(path);
@@ -44,6 +57,29 @@ public class CliqueUtil implements Serializable {
 		}
 
 		return cliques;
+	}
+
+	/**
+	 * 将求得的社区数据写入文件中
+	 * 
+	 * @param path
+	 */
+	public void writeCommToPath(String path, HashMap<Integer, ArrayList<Clique>> comms) {
+		File file = new File(path);
+		try {
+			BufferedWriter bw = new BufferedWriter(new FileWriter(file));
+			for (Entry<Integer, ArrayList<Clique>> entry : comms.entrySet()) {
+				bw.write("pid: " + entry.getKey() + " cids: ");
+				for (Clique clique : entry.getValue()) {
+					bw.write(clique.cliqueInfo.toString() + " ");
+				}
+				bw.flush();
+				bw.newLine();
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	/**

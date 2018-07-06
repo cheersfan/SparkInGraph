@@ -47,8 +47,8 @@ public class SparkMCE3 {
 		// SparkContext对象
 		JavaSparkContext sc = new JavaSparkContext(conf);
 
-		// // 从file中读取，创建broadcast变量
-		File file = new File("E:/JavaProject/graph_data/graph_10_format.txt");
+		// 从file中读取，创建broadcast变量
+		File file = new File("E:/JavaProject/graph_data/graph2_10_format.txt");
 		BufferedReader reader = null;
 		Graph graph = new Graph();
 		ArrayList<ArrayList<String>> adjGraph = new ArrayList<>();
@@ -168,7 +168,7 @@ public class SparkMCE3 {
 		ArrayList<ArrayList<String>> cliques_list = new ArrayList<>(sortedCliques.collect());
 
 		long mceTime = System.currentTimeMillis();
-		File file2 = new File("E:/JavaProject/graph_data/graph_10_cliques.txt");
+		File file2 = new File("E:/JavaProject/graph_data/graph2_10_cliques.txt");
 		try {
 			BufferedWriter bw = new BufferedWriter(new FileWriter(file2));
 			for (int i = 0; i < cliques_list.size(); i++) {
