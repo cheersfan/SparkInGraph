@@ -23,8 +23,14 @@ public class FormatOriginData {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		System.out.println("start");
-		File file = new File("D:/data/as-caida20071105.txt/as-caida20071105.txt"); // 读的数据
-		File file2 = new File("E:/JavaProject/graph_data/as-caida20071105_format.txt"); // 写的数据，将读的数据处理后写出来
+		// File file = new File("D:/data/as-caida20071105.txt/as-caida20071105.txt"); //
+		// 读的数据
+		// File file2 = new
+		// File("E:/JavaProject/graph_data/as-caida20071105_format.txt"); //
+		// 写的数据，将读的数据处理后写出来
+
+		File file = new File("E:/JavaProject/graph_data/graph_20_origin.txt"); // 读的数据
+		File file2 = new File("E:/JavaProject/graph_data/graph_20_format.txt"); // 写的数据，将读的数据处理后写出来
 
 		BufferedReader reader = null;
 		Graph graph = new Graph();
@@ -35,7 +41,7 @@ public class FormatOriginData {
 
 			while ((str = reader.readLine()) != null) {
 				System.out.println(str);
-				ArrayList<String> list = new ArrayList<>(Arrays.asList(str.split("\t")));
+				ArrayList<String> list = new ArrayList<>(Arrays.asList(str.split(" ")));
 				graph.addNodes(list.get(0));
 				graph.addEdge(list.get(0), list.get(1));
 			}

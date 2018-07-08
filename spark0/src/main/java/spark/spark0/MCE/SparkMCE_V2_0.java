@@ -25,14 +25,22 @@ public class SparkMCE_V2_0 {
 		// 创建sparkConf,sparkContext
 		SparkConf conf = new SparkConf().setAppName("sparkMCE_v2").setMaster("local");
 		JavaSparkContext sc = new JavaSparkContext(conf);
+		int nodeCount = 500;
+		Long startTime = System.currentTimeMillis();
 
 		// 文件的读写路径
-		String readGraphPath = "E:/JavaProject/graph_data/graph_10_format.txt";
-		String writeGraphPath = "E:/JavaProject/graph_data/graph_10_cliques.txt";
+		// String readGraphPath = "E:/JavaProject/graph_data/graph_" + nodeCount +
+		// "_format.txt";
+		// String writeGraphPath = "E:/JavaProject/graph_data/graph_" + nodeCount +
+		// "_cliques.txt";
+
+		String readGraphPath = "E:/JavaProject/graph_data/CA-GrQc_5K_format.txt";
+		String writeGraphPath = "E:/JavaProject/graph_data/CA-GrQc_5K_clique2.txt";
 
 		// 1.读取图数据，转换为Graph类，
 		Graph graph = new Graph(readGraphPath);
 		ArrayList<ArrayList<String>> adjGraph = graph.getAdjGraph();
+		Long readTime = System.currentTimeMillis();
 
 		// 2.创建广播变量
 		Broadcast<Graph> graph_bc = sc.broadcast(graph);
@@ -40,14 +48,14 @@ public class SparkMCE_V2_0 {
 		// 3.将adjGraph数据转换为RDD
 		JavaRDD<ArrayList<String>> graphRDD = sc.parallelize(adjGraph);
 
-		graphRDD.foreach(new VoidFunction<ArrayList<String>>() {
-
-			@Override
-			public void call(ArrayList<String> t) throws Exception {
-				// TODO Auto-generated method stub
-				System.out.println(t.toString());
-			}
-		});
+		// graphRDD.foreach(new VoidFunction<ArrayList<String>>() {
+		//
+		// @Override
+		// public void call(ArrayList<String> t) throws Exception {
+		// // TODO Auto-generated method stub
+		// System.out.println(t.toString());
+		// }
+		// });
 
 		// 4.调用TTT方法，计算cliques
 		JavaRDD<ArrayList<String>> cliques = graphRDD
@@ -61,7 +69,19 @@ public class SparkMCE_V2_0 {
 					}
 				});
 
-		// 5.将求得的全部级打团,汇集到一起，存入文件中
+		cliques.foreach(new VoidFunction<ArrayList<String>>() {
+
+			@Override
+			public void call(ArrayList<String> t) throws Exception {
+				// TODO Auto-generated method stub
+				System.out.println("Cliques:" + t.toString());
+			}
+		});
+
+		Long computeTime = System.currentTimeMillis();
+		System.out.println("读取时间：" + (readTime - startTime) / 1000 + "s");
+		System.out.println("计算时间：" + (computeTime - readTime) / 1000 + "s");
+		// 5.将求得的全部极大团,汇集到一起，存入文件中
 		ArrayList<ArrayList<String>> clique_list = new ArrayList<>(cliques.collect());
 
 		File writeCliqueFile = new File(writeGraphPath);

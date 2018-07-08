@@ -84,9 +84,10 @@ public class Graph implements Serializable {
 	}
 
 	public void addEdge(String n, String eNode) {
-		if (getEdges().containsKey(n)) {
+
+		if (getEdges().containsKey(n) && !getEdges().get(n).contains(eNode)) {
 			getEdges().get(n).add(eNode);
-		} else {
+		} else if (!getEdges().containsKey(n)) {
 			ArrayList<String> e = new ArrayList<>();
 			e.add(eNode);
 			getEdges().put(n, e);
@@ -109,7 +110,11 @@ public class Graph implements Serializable {
 	public void printGraph() {
 		System.out.println("nodes: " + nodes.toString());
 		for (String n : nodes) {
-			System.out.println("edges: " + n + " -> " + getEdges().get(n).toString());
+			if (getEdges().get(n) != null) {
+				System.out.println("edges: " + n + " -> " + getEdges().get(n).toString());
+			} else {
+				System.out.println("edges: " + n + " -> " + "[]");
+			}
 		}
 	}
 
@@ -148,5 +153,19 @@ public class Graph implements Serializable {
 			adjGraph.add(list);
 		}
 		return adjGraph;
+	}
+
+	/**
+	 * 返回图的边数
+	 * 
+	 */
+	public int getEdgeCount() {
+
+		int edgeCount = 0;
+
+		for (Entry<String, ArrayList<String>> node : edges.entrySet()) {
+			edgeCount += node.getValue().size();
+		}
+		return edgeCount;
 	}
 }

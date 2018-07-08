@@ -21,7 +21,7 @@ public class test {
 		// }
 
 		TTT ttt = new TTT();
-		ttt.TTTMethod("E:/JavaProject/graph_data/graph_9_format.txt");
+		ttt.TTTMethod("E:/JavaProject/graph_data/graph_10_format.txt");
 		System.out.println("CLIQUES");
 		for (ArrayList<String> clique : ttt.cliques) {
 			System.out.println("Clique: " + clique.toString());
